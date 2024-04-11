@@ -1,3 +1,4 @@
 # Projeto2-FEI
 
-Programa feito em C com o proprósito de criar um criador de tarefas, rankeando pela importancia, também é possivel listar, apagar
+Programa feito em C com o proprósito de criar tarefas, apaga-las e ordenar por prioridades
+

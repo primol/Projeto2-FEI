@@ -6,14 +6,26 @@ ERROS criar(Tarefa tarefas[], int *pos){
     if(*pos >= TOTAL)
         return MAX_TAREFA;
 
-    printf("Entre com a prioridade: ");
-    scanf("%d", &tarefas[*pos].prioridade);
-    clearBuffer();
+    int prioridade;
+    do {
+        printf("Entre com a prioridade (de 0 a 10): ");
+        scanf("%d", &prioridade);
+        clearBuffer();
+
+        if (prioridade < 0 || prioridade > 10) {
+            printf("Prioridade deve estar entre 0 e 10. Por favor, tente novamente.\n");
+        }
+    } while (prioridade < 0 || prioridade > 10);
+
+    tarefas[*pos].prioridade = prioridade;
+
     printf("Entre com a categoria: ");
-    fgets(tarefas[*pos].categoria, 100, stdin);
+    scanf(" %99[^\n]%*c", tarefas[*pos].categoria);
+    clearBuffer();
 
     printf("Entre com a descricao: ");
-    fgets(tarefas[*pos].descricao, 300, stdin);
+    scanf(" %299[^\n]%*c", tarefas[*pos].descricao);
+    clearBuffer();
 
     *pos = *pos + 1;
 
@@ -48,11 +60,34 @@ ERROS listar(Tarefa tarefas[], int *pos){
     if(*pos == 0)
         return SEM_TAREFAS;
 
-    for(int i=0; i<*pos; i++){
-        printf("Pos: %d\t", i+1);
-        printf("Prioridade: %d\t", tarefas[i].prioridade);
-        printf("Categoria: %s\t", tarefas[i].categoria);
-        printf("Descricao: %s\n", tarefas[i].descricao);
+    char categoria[100];
+    printf("Entre com a categoria (ou deixe em branco para listar todas): ");
+    fgets(categoria, 100, stdin);
+
+    // Remover a quebra de linha do final da categoria
+    categoria[strcspn(categoria, "\n")] = 0;
+
+    if (categoria[0] == '\0') {
+        for(int i=0; i<*pos; i++){
+            printf("Pos: %d\t", i+1);
+            printf("Prioridade: %d\t", tarefas[i].prioridade);
+            printf("Categoria: %s\t", tarefas[i].categoria);
+            printf("Descricao: %s\n", tarefas[i].descricao);
+        }
+    } else {
+        int encontrou = 0;
+        for(int i=0; i<*pos; i++){
+            if (strcmp(tarefas[i].categoria, categoria) == 0) {
+                encontrou = 1;
+                printf("Pos: %d\t", i+1);
+                printf("Prioridade: %d\t", tarefas[i].prioridade);
+                printf("Categoria: %s\t", tarefas[i].categoria);
+                printf("Descricao: %s\n", tarefas[i].descricao);
+            }
+        }
+        if (!encontrou) {
+            printf("Nenhuma tarefa encontrada para a categoria '%s'.\n", categoria);
+        }
     }
 
     return OK;

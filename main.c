@@ -29,6 +29,13 @@ int main(){
             printf("Sair...\n");
 
     } while(opcao >= 0);
+    ERROS erroFinal = fs[3](tarefas, &pos);
+    if (erroFinal != OK) {
+        printf("Erro ao salvar as tarefas.\n");
+        return 1;
+    }
 
+    return 0; 
+  
     fs[3](tarefas, &pos);
 }

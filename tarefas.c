@@ -20,12 +20,14 @@ ERROS criar(Tarefa tarefas[], int *pos){
     tarefas[*pos].prioridade = prioridade;
 
     printf("Entre com a categoria: ");
-    scanf(" %99[^\n]%*c", tarefas[*pos].categoria);
-    clearBuffer();
+    fgets(tarefas[*pos].categoria, 100, stdin);
+    tarefas[*pos].categoria[strcspn(tarefas[*pos].categoria,"\n")] = 0;
 
-    printf("Entre com a descricao: ");
-    scanf(" %299[^\n]%*c", tarefas[*pos].descricao);
-    clearBuffer();
+    printf("Entre com a descrição: ");
+    fgets(tarefas[*pos].descricao, 300, stdin);
+    tarefas[*pos].descricao[strcspn(tarefas[*pos].descricao, "\n")] = 0;
+
+    
 
     *pos = *pos + 1;
 
